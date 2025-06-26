@@ -2,11 +2,12 @@ package com.practica01.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name="categoria")
+@Table(name="arbol")
 public class Arbol implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -16,6 +17,8 @@ public class Arbol implements Serializable {
     private Long idArbol;
     private String nombre;
     private String tipoFlor;
-    private boolean activo;
+    private Integer durezaMadera;
+    private BigDecimal tiempoVida;
+    private String rutaImagen;
 }
 

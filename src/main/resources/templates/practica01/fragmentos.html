@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<body>
+
+    <section th:fragment="formularioArbol" id="formularioArbol" class="container my-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0"><span th:text="${arbol.idArbol == null ? 'Nuevo' : 'Editar'}"></span> Árbol</h2>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/arboles/guardar}" th:object="${arbol}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{idArbol}" />
+                    <input type="hidden" th:field="*{rutaImagen}" />
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipoFlor" class="form-label">Tipo de Flor:</label>
+                        <input type="text" id="tipoFlor" th:field="*{tipoFlor}" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="durezaMadera" class="form-label">Dureza de la Madera (INT):</label>
+                        <input type="number" id="durezaMadera" th:field="*{durezaMadera}" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tiempoVida" class="form-label">Tiempo de Vida (DECIMAL):</label>
+                        <input type="number" step="0.01" id="tiempoVida" th:field="*{tiempoVida}" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imagenFile" class="form-label">Imagen:</label>
+                        <input type="file" id="imagenFile" name="imagenFile" accept="image/*" class="form-control" />
+                    </div>
+
+                    <div th:if="${arbol.rutaImagen != null and arbol.rutaImagen != ''}" class="mb-3">
+                        <p class="mb-1">Imagen actual:</p>
+                        <img th:src="@{${arbol.rutaImagen}}" alt="Imagen actual del árbol" class="img-thumbnail" style="width:150px; height:auto; border-radius:5px;" />
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a th:href="@{/arboles}" class="btn btn-secondary ms-2">Volver a la lista</a>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section th:fragment="listadoArboles" id="listadoArboles" class="container my-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Listado de Árboles</h2>
+            </div>
+            <div class="card-body">
+                <a th:href="@{/arboles/nuevo}" class="btn btn-success mb-3">Agregar Nuevo Árbol</a>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Tipo Flor</th>
+                                <th>Dureza Madera</th>
+                                <th>Tiempo Vida</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="arbol : ${arboles}">
+                                <td th:text="${arbol.idArbol}"></td>
+                                <td th:text="${arbol.nombre}"></td>
+                                <td th:text="${arbol.tipoFlor}"></td>
+                                <td th:text="${arbol.durezaMadera}"></td>
+                                <td th:text="${arbol.tiempoVida}"></td>
+                                <td>
+                                    <img th:if="${arbol.rutaImagen != null and arbol.rutaImagen != ''}"
+                                         th:src="@{${arbol.rutaImagen}}"
+                                         alt="Imagen del árbol"
+                                         style="width:80px; height:auto; border-radius:3px;" />
+                                    <span th:if="${arbol.rutaImagen == null or arbol.rutaImagen == ''}">Sin imagen</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/arboles/editar/{idArbol}(idArbol=${arbol.idArbol})}" class="btn btn-sm btn-info text-white">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a th:href="@{/arboles/eliminar/{idArbol}(idArbol=${arbol.idArbol})}"
+                                       onclick="return confirm('¿Estás seguro de que quieres eliminar este árbol?');" class="btn btn-sm btn-danger ms-1">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:if="${arboles.empty}">
+                                <td colspan="7" class="text-center">No hay árboles registrados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

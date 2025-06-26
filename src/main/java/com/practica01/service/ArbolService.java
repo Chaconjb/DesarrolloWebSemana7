@@ -1,49 +1,56 @@
 package com.practica01.service;
 
 import com.practica01.domain.Arbol;
-import java.util.List;
+import com.practica01.repository.ArbolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scripting.support.StandardScriptUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.practica01.repository.ArbolRepository;
+
+import java.util.List;
+import java.util.Optional; 
 
 @Service
 public class ArbolService {
-    
+
+    private final ArbolRepository arbolRepository; // Usar final y constructor para inyección es una buena práctica
+
     @Autowired
-    private ArbolRepository categoriaRepository;
-    
-    @Transactional(readOnly=true)
-    public List<Arbol> getCategoria(boolean activos){
-        var lista = categoriaRepository.findAll();
-        
-        if (activos) {
-            lista.removeIf(c -> !c.isActivo());
-        }
-        return lista;
+    public ArbolService(ArbolRepository arbolRepository) {
+        this.arbolRepository = arbolRepository;
     }
-    @Transactional(readOnly=true)
-    public Arbol getCategoria(Arbol categoria){
-        return categoriaRepository.findById(categoria.getIdCategoria())
+
+    @Transactional(readOnly = true)
+    public List<Arbol> getArboles() { // Eliminado el parámetro 'activos'
+        return arbolRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Arbol getArbol(Arbol arbol) {
+        // Busca por el ID que está en el objeto arbol
+        return arbolRepository.findById(arbol.getIdArbol())
                 .orElse(null);
-        
     }
     
-    @Transactional
-    public void save (Arbol categoria){
-        categoriaRepository.save(categoria);
+    // Sobrecargamos para buscar directamente por ID
+    @Transactional(readOnly = true)
+    public Optional<Arbol> getArbolById(Long id) {
+        return arbolRepository.findById(id);
     }
+
     @Transactional
-    public boolean delete(Arbol categoria){
+    public void save(Arbol arbol) {
+        arbolRepository.save(arbol);
+    }
+
+    @Transactional
+    public boolean delete(Arbol arbol) {
         try {
-            categoriaRepository.delete(categoria);
-            categoriaRepository.flush();
+            arbolRepository.delete(arbol);
+            arbolRepository.flush(); // Fuerza la sincronización con la BD
             return true;
         } catch (Exception e) {
+            System.err.println("Error al eliminar el árbol: " + e.getMessage()); // Considera usar un logger
             return false;
         }
-  
     }
-    
 }
