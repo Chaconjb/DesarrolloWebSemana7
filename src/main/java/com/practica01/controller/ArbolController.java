@@ -8,11 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes; 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException; // <<-- Asegúrate de que estén estas
+import java.nio.file.Files; // <<-- Asegúrate de que estén estas
+import java.nio.file.Path;  // <<-- Asegúrate de que estén estas
+import java.nio.file.Paths; // <<-- Asegúrate de que estén estas
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/arboles")
@@ -25,20 +26,17 @@ public class ArbolController {
         this.arbolService = arbolService;
     }
 
-    @GetMapping({"/", ""}) 
+    @GetMapping({"/", ""}) // Permite acceder tanto con /arboles como con /arboles/
     public String listarArboles(Model model) {
         List<Arbol> arboles = arbolService.getArboles();
         model.addAttribute("arboles", arboles);
-        return "practica01/listado"; // <<<--- CORRECCIÓN AQUÍ: Apunta a templates/practica01/listado.html
+        return "practica01/listado"; // Apunta a templates/practica01/listado.html
     }
-    
-    // ... el resto de tu controlador (mostrarFormularioArbol, guardarArbol, editarArbol, eliminarArbol)
-    // que ya deberían estar regresando "practica01/modifica"
     
     @GetMapping("/nuevo")
     public String mostrarFormularioArbol(Model model) {
         model.addAttribute("arbol", new Arbol());
-        return "practica01/modifica"; 
+        return "practica01/modifica"; // Apunta a templates/practica01/modifica.html
     }
 
     @PostMapping("/guardar")
@@ -46,23 +44,29 @@ public class ArbolController {
                                @RequestParam("imagenFile") MultipartFile imagenFile,
                                RedirectAttributes redirectAttributes) { 
 
+        // PASO 1: Guarda el árbol inicialmente para que se le asigne un ID (si es nuevo)
         arbolService.save(arbol);
 
+        // PASO 2: Maneja la imagen solo si se ha proporcionado una nueva
         if (!imagenFile.isEmpty()) {
             try {
                 String uploadDir = "src/main/resources/static/imagenes/";
                 Path uploadPath = Paths.get(uploadDir);
                 
+                // Crea el directorio si no existe
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
                 }
 
+                // Ahora podemos usar arbol.getIdArbol() porque ya está poblado
                 String fileName = arbol.getIdArbol() + "_" + imagenFile.getOriginalFilename();
                 Path filePath = uploadPath.resolve(fileName);
                 Files.copy(imagenFile.getInputStream(), filePath);
 
+                // Guarda la ruta relativa de la imagen en la entidad
                 arbol.setRutaImagen("/imagenes/" + fileName);
 
+                // PASO 3: Guarda el árbol de nuevo para actualizar la ruta de la imagen en la BD
                 arbolService.save(arbol);
                 
                 redirectAttributes.addFlashAttribute("successMessage", "Árbol y imagen guardados exitosamente!");
@@ -70,6 +74,7 @@ public class ArbolController {
             } catch (IOException e) {
                 System.err.println("Error al guardar la imagen: " + e.getMessage());
                 redirectAttributes.addFlashAttribute("errorMessage", "Error al guardar la imagen: " + e.getMessage());
+                // Redirige al formulario de edición o creación si hay un error con la imagen
                 if (arbol.getIdArbol() != null) {
                     return "redirect:/arboles/editar/" + arbol.getIdArbol();
                 } else {
@@ -80,7 +85,7 @@ public class ArbolController {
             redirectAttributes.addFlashAttribute("successMessage", "Árbol guardado exitosamente (sin cambios en la imagen).");
         }
 
-        return "redirect:/arboles"; 
+        return "redirect:/arboles"; // Redirige a la lista de árboles
     }
 
     @GetMapping("/editar/{idArbol}")

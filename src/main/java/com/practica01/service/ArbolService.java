@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional; 
+import java.util.Optional;
+import org.slf4j.Logger; 
+import org.slf4j.LoggerFactory; 
 
 @Service
 public class ArbolService {
 
-    private final ArbolRepository arbolRepository; // Usar final y constructor para inyección es una buena práctica
+    private static final Logger logger = LoggerFactory.getLogger(ArbolService.class); 
+
+    private final ArbolRepository arbolRepository;
 
     @Autowired
     public ArbolService(ArbolRepository arbolRepository) {
@@ -20,18 +24,16 @@ public class ArbolService {
     }
 
     @Transactional(readOnly = true)
-    public List<Arbol> getArboles() { // Eliminado el parámetro 'activos'
+    public List<Arbol> getArboles() {
         return arbolRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     public Arbol getArbol(Arbol arbol) {
-        // Busca por el ID que está en el objeto arbol
         return arbolRepository.findById(arbol.getIdArbol())
                 .orElse(null);
     }
     
-    // Sobrecargamos para buscar directamente por ID
     @Transactional(readOnly = true)
     public Optional<Arbol> getArbolById(Long id) {
         return arbolRepository.findById(id);
@@ -49,7 +51,7 @@ public class ArbolService {
             arbolRepository.flush(); // Fuerza la sincronización con la BD
             return true;
         } catch (Exception e) {
-            System.err.println("Error al eliminar el árbol: " + e.getMessage()); // Considera usar un logger
+            logger.error("Error al eliminar el árbol con ID {}: {}", arbol.getIdArbol(), e.getMessage(), e); 
             return false;
         }
     }

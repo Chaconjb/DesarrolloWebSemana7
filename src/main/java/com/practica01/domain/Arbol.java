@@ -20,5 +20,17 @@ public class Arbol implements Serializable {
     private Integer durezaMadera;
     private BigDecimal tiempoVida;
     private String rutaImagen;
-}
 
+    // Constructor vacío requerido por JPA
+    public Arbol() {
+    }
+
+    // Constructor para pruebas o inicialización (opcional)
+    public Arbol(String nombre, String tipoFlor, Integer durezaMadera, BigDecimal tiempoVida, String rutaImagen) {
+        this.nombre = nombre;
+        this.tipoFlor = tipoFlor;
+        this.durezaMadera = durezaMadera;
+        this.tiempoVida = tiempoVida;
+        this.rutaImagen = rutaImagen;
+    }
+}
