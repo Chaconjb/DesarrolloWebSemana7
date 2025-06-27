@@ -1,4 +1,5 @@
 package com.practica01;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -10,13 +11,15 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+// No necesitamos ResourceHandlerRegistry si no servimos imágenes externas.
+// import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry; 
 
 @Configuration
 public class ProjectConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/").setViewName("index"); 
     }
 
     @Bean
@@ -51,4 +54,12 @@ public class ProjectConfig implements WebMvcConfigurer {
         registro.addInterceptor(localeChangeInterceptor());
     }
 
+    // Ya no necesitamos addResourceHandlers si no servimos imágenes dinámicas
+    /*
+    @Override 
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/imagenes/**")
+                .addResourceLocations("file:./uploads/"); 
+    }
+    */
 }

@@ -2,35 +2,40 @@ package com.practica01.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import lombok.Data;
 
-@Data
-@Entity
-@Table(name="arbol")
+@Data 
+@Entity 
+@Table(name = "arbol") 
 public class Arbol implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
+
+    private static final long serialVersionUID = 1L; 
+
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Column(name = "id_arbol") 
     private Long idArbol;
     private String nombre;
+    @Column(name = "tipo_flor")
     private String tipoFlor;
-    private Integer durezaMadera;
-    private BigDecimal tiempoVida;
-    private String rutaImagen;
+    
+    // *** CAMBIO CRÍTICO AQUÍ: int a Integer ***
+    @Column(name = "dureza_madera")
+    private Integer durezaMadera; 
+    
+    // *** CAMBIO CRÍTICO AQUÍ: double a Double ***
+    @Column(name = "tiempo_vida")
+    private Double tiempoVida; 
 
-    // Constructor vacío requerido por JPA
     public Arbol() {
     }
 
-    // Constructor para pruebas o inicialización (opcional)
-    public Arbol(String nombre, String tipoFlor, Integer durezaMadera, BigDecimal tiempoVida, String rutaImagen) {
+    // Constructor con todos los campos (excepto ID para creación)
+    // También ajustado a Integer y Double
+    public Arbol(String nombre, String tipoFlor, Integer durezaMadera, Double tiempoVida) {
         this.nombre = nombre;
         this.tipoFlor = tipoFlor;
         this.durezaMadera = durezaMadera;
         this.tiempoVida = tiempoVida;
-        this.rutaImagen = rutaImagen;
     }
 }
