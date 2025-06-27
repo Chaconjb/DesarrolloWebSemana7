@@ -54,12 +54,4 @@ public class ProjectConfig implements WebMvcConfigurer {
         registro.addInterceptor(localeChangeInterceptor());
     }
 
-    // Ya no necesitamos addResourceHandlers si no servimos imágenes dinámicas
-    /*
-    @Override 
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/imagenes/**")
-                .addResourceLocations("file:./uploads/"); 
-    }
-    */
 }

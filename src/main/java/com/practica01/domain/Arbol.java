@@ -4,38 +4,46 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import lombok.Data;
 
-@Data 
-@Entity 
-@Table(name = "arbol") 
+@Data // Anotación de Lombok para generar getters, setters, toString, equals, hashCode
+@Entity // Indica que esta clase es una entidad JPA
+@Table(name = "arbol") // Mapea esta entidad a la tabla "arbol" en la base de datos
 public class Arbol implements Serializable {
 
-    private static final long serialVersionUID = 1L; 
+    private static final long serialVersionUID = 1L; // Número de serie para la serialización
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    @Column(name = "id_arbol") 
+    @Id // Marca idArbol como la clave primaria
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generación automática de IDs (autoincremental)
+    @Column(name = "id_arbol") // Mapea a la columna "id_arbol" en la BD
     private Long idArbol;
-    private String nombre;
-    @Column(name = "tipo_flor")
+    
+    @Column(name = "nombre_comun") // Mapeo a nombre_comun en la BD
+    private String nombreComun; // Antes 'nombre', ahora 'nombreComun' para coincidir con la BD
+    
+    @Column(name = "tipo_flor") // Mapeo a tipo_flor en la BD
     private String tipoFlor;
     
-    // *** CAMBIO CRÍTICO AQUÍ: int a Integer ***
+    // *** CAMBIO: Integer para permitir NULLs desde la BD y mapeo de columna ***
     @Column(name = "dureza_madera")
     private Integer durezaMadera; 
     
-    // *** CAMBIO CRÍTICO AQUÍ: double a Double ***
-    @Column(name = "tiempo_vida")
-    private Double tiempoVida; 
+    // *** CAMBIO: Double para permitir NULLs desde la BD y mapeo de columna (era tiempoVida) ***
+    @Column(name = "altura_promedio")
+    private Double alturaPromedio; 
 
+    // *** NUEVO CAMPO: color_Hoja ***
+    @Column(name = "color_Hoja")
+    private String colorHoja;
+
+    // Constructor vacío requerido por JPA
     public Arbol() {
     }
 
     // Constructor con todos los campos (excepto ID para creación)
-    // También ajustado a Integer y Double
-    public Arbol(String nombre, String tipoFlor, Integer durezaMadera, Double tiempoVida) {
-        this.nombre = nombre;
+    public Arbol(String nombreComun, String tipoFlor, Integer durezaMadera, Double alturaPromedio, String colorHoja) {
+        this.nombreComun = nombreComun;
         this.tipoFlor = tipoFlor;
         this.durezaMadera = durezaMadera;
-        this.tiempoVida = tiempoVida;
+        this.alturaPromedio = alturaPromedio;
+        this.colorHoja = colorHoja;
     }
 }
