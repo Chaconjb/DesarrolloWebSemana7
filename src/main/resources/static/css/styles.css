@@ -1,0 +1,237 @@
+/* src/main/resources/static/css/styles.css */
+
+:root {
+    --primary-color: #5b8fb9;
+    --secondary-bg-color: #f0f4f8;
+    --text-dark: #334e68;
+    --border-color: #ccd9e7;
+    --light-text: #ffffff;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--secondary-bg-color);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header-main {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    background-color: transparent !important;
+    padding: 0.8rem 0 !important;
+}
+
+.navbar-brand {
+    color: var(--light-text) !important;
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--light-text) !important;
+}
+
+.language-switcher .btn {
+    border-color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.language-switcher .btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--light-text);
+}
+
+#main-header-section {
+    background-color: var(--primary-color);
+    padding: 1.5rem 0;
+    color: var(--light-text);
+}
+
+#main-header-section h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+main.container {
+    flex-grow: 1;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    background-color: var(--primary-color) !important;
+    color: var(--light-text) !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+    padding: 1rem 1.5rem;
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.form-control {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(91, 143, 185, 0.25);
+}
+
+.btn {
+    border-radius: 5px;
+    font-weight: 500;
+    padding: 0.7rem 1.5rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #4a779c;
+    border-color: #4a779c;
+}
+
+.btn-secondary {
+    background-color: var(--border-color);
+    border-color: var(--border-color);
+    color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+    background-color: #cad8e5;
+    border-color: #cad8e5;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: var(--text-dark);
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+
+.btn-light {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+}
+
+.btn-light:hover {
+    background-color: white;
+    border-color: white;
+    color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.9); 
+}
+
+.btn-sm {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+}
+
+.table thead {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+}
+
+.table thead th {
+    padding: 0.8rem 1rem;
+}
+
+.table tbody td {
+    border-top: 1px solid var(--border-color);
+    padding: 0.8rem 1rem;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.alert {
+    border-radius: 5px;
+    border: none;
+}
+
+.footer-main {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    #main-header-section h1 {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+    .navbar-brand {
+        font-size: 1.4rem;
+    }
+    .language-switcher {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+}

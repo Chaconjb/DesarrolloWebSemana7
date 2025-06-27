@@ -11,8 +11,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-// No necesitamos ResourceHandlerRegistry si no servimos imágenes externas.
-// import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry; 
+ 
 
 @Configuration
 public class ProjectConfig implements WebMvcConfigurer {

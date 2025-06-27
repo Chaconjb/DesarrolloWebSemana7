@@ -6,27 +6,26 @@
         <meta charset="UTF-8"/>
     </head>
     <body>
-        <!-- Fragmento del Formulario para Agregar/Modificar Árbol -->
+       
         <section th:fragment="formularioArbol" class="container my-4">
             <h2 class="mb-4">Modificar Árbol</h2>
             
-            <!-- ELIMINADO: enctype="multipart/form-data" ya no es necesario -->
             <form th:action="@{/arboles/guardar}" th:object="${arbol}" method="POST">
                 <input type="hidden" th:field="*{idArbol}"/>
                 
                 <div class="mb-3">
-                    <label for="nombreComun" class="form-label">Nombre Común:</label>
+                    <label for="nombreComun" class="form-label">Nombre del arbol:</label>
                     <input type="text" id="nombreComun" th:field="*{nombreComun}" class="form-control" required="true"/>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="tipoFlor" class="form-label">Tipo de Flor:</label>
+                    <label for="tipoFlor" class="form-label">Tipo de Flor (Si las flores crecen individualmente o en grupos):</label>
                     <input type="text" id="tipoFlor" th:field="*{tipoFlor}" class="form-control" required="true"/>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="durezaMadera" class="form-label">Dureza de Madera:</label>
-                    <input type="number" id="durezaMadera" th:field="*{durezaMadera}" class="form-control" required="true"/>
+                    <label for="durezaMadera" class="form-label">Dureza de Madera(Blanda, Media, Dura):</label>
+                    <input type="text" id="durezaMadera" th:field="*{durezaMadera}" class="form-control" required="true"/>
                 </div>
                 
                 <div class="mb-3">
@@ -34,9 +33,9 @@
                     <input type="number" step="0.01" id="alturaPromedio" th:field="*{alturaPromedio}" class="form-control" required="true"/>
                 </div>
 
-                <!-- NUEVO CAMPO: Color de Hoja -->
+                
                 <div class="mb-3">
-                    <label for="colorHoja" class="form-label">Color de Hoja:</label>
+                    <label for="colorHoja" class="form-label">Color de las Hojas:</label>
                     <input type="text" id="colorHoja" th:field="*{colorHoja}" class="form-control" required="true"/>
                 </div>
                 
@@ -47,7 +46,7 @@
             </form>
         </section>
 
-        <!-- Fragmento de la Tabla de Listado de Árboles -->
+        
         <section th:fragment="tablaArboles" class="container my-4">
             <h2 class="mb-4">Listado de Árboles</h2>
             
@@ -71,7 +70,7 @@
                             <th>Tipo Flor</th>
                             <th>Dureza Madera</th>
                             <th>Altura Promedio</th>
-                            <th>Color Hoja</th> <!-- NUEVO ENCABEZADO -->
+                            <th>Color Hoja</th> 
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -82,13 +81,13 @@
                             <td th:text="${arbol.tipoFlor}"></td>
                             <td th:text="${arbol.durezaMadera}"></td>
                             <td th:text="${arbol.alturaPromedio}"></td>
-                            <td th:text="${arbol.colorHoja}"></td> <!-- NUEVA CELDA -->
+                            <td th:text="${arbol.colorHoja}"></td> 
                             <td>
                                 <a th:href="@{/arboles/editar/{id}(id=${arbol.idArbol})}" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de editar -->
+                                    <i class="fas fa-pencil-alt"></i> 
                                 </a>
-                                <a th:href="@{/arboles/eliminar/{id}(id=${arbol.idArbol})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que quieres eliminar este árbol?')">
-                                    <i class="fas fa-trash-alt"></i> <!-- Ícono de eliminar -->
+                                <a th:href="@{/arboles/eliminar/{id}(id=${arbol.idArbol})}" class="btn btn-danger btn-sm" onclick="return confirm('Segur@ quieres eliminar este árbol?')">
+                                    <i class="fas fa-trash-alt"></i> 
                                 </a>
                             </td>
                         </tr>
